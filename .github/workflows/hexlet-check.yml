@@ -8,9 +8,9 @@ name: hexlet-check
 on:
   push:
     branches:
-      - '**'
+      - "**"
     tags:
-      - '**'
+      - "**"
 
 jobs:
   build:
@@ -22,3 +22,17 @@ jobs:
         uses: hexlet/project-action@release
         with:
           hexlet-id: ${{ secrets.HEXLET_ID }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check codestyle of the project
+        run: make lint
+
+      - name: Run tests
+        run: make test

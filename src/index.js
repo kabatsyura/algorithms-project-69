@@ -1,17 +1,18 @@
-import search from "./search-engine/search.js";
+export default (items, token) => {
+  const term = token.toLowerCase().match(/\w+/g);
+  if (!term) return [];
 
-const doc1 = {
-  id: "doc1",
-  text: "I can't shoot straight unless I've had a pint!",
+  return items
+    .map((item) => {
+      const words = item.text.match(/\w+/g);
+      const count = words.reduce(
+        (acc, word) => (term.includes(word.toLowerCase()) ? acc + 1 : acc),
+        0
+      );
+
+      return { id: item.id, count };
+    })
+    .filter((item) => item.count > 0)
+    .sort((obj1, obj2) => obj2.count - obj1.count)
+    .map((obj) => obj.id);
 };
-const doc2 = { id: "doc2", text: "Don't shoot shoot shoot that thing at me." };
-const doc3 = { id: "doc3", text: "I'm your shooter." };
-const docs = [doc1, doc2, doc3];
-
-const result = search(docs, "shoot at me");
-// const result2 = search(docs, "pint"); // ['doc1']
-// const result3 = search(docs, "pint!"); // ['doc1']
-
-console.log(result);
-
-// console.log(result, result2, result3); // => ['doc1', 'doc2']

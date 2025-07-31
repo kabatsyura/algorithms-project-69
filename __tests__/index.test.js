@@ -27,4 +27,9 @@ describe("Test search function", () => {
     const result = search(docs, "SHOOT");
     expect(result).toEqual(["doc1", "doc2"]);
   });
+
+  test("It successfull with punctuation mark", () => {
+    const result = search(docs, "pInt!");
+    expect(result).toEqual(["doc1"]);
+  });
 });

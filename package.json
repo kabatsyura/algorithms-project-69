@@ -1,0 +1,33 @@
+{
+  "name": "algorithms-project-69",
+  "version": "1.0.0",
+  "description": "Implementation of the search engine",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-vm-modules node_modules/.bin/jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kabatsyura/algorithms-project-69.git"
+  },
+  "keywords": [
+    "algorithms",
+    "elasticsearch"
+  ],
+  "author": "Dmitrii Kabatsiura",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kabatsyura/algorithms-project-69/issues"
+  },
+  "homepage": "https://github.com/kabatsyura/algorithms-project-69#readme",
+  "devDependencies": {
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "@eslint/js": "^9.32.0",
+    "babel-jest": "^30.0.5",
+    "eslint": "^9.32.0",
+    "globals": "^16.3.0",
+    "jest": "^30.0.5"
+  }
+}

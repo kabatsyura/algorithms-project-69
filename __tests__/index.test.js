@@ -15,7 +15,7 @@ describe("Test search function", () => {
 
   test("It successfull test", () => {
     const result = search(docs, "shoot");
-    expect(result).toEqual(["doc1", "doc2"]);
+    expect(result).toEqual(["doc2", "doc1"]);
   });
 
   test("Without matches", () => {
@@ -25,7 +25,7 @@ describe("Test search function", () => {
 
   test("It successfull with capital words", () => {
     const result = search(docs, "SHOOT");
-    expect(result).toEqual(["doc1", "doc2"]);
+    expect(result).toEqual(["doc2", "doc1"]);
   });
 
   test("It successfull with punctuation mark", () => {

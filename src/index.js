@@ -1,15 +1,56 @@
-import search from "./search-engine/search.js";
-
-const doc1 = {
-  id: "doc1",
-  text: "I can't shoot straight unless I've had a pint!",
+const buildIndex = (docs) => {
+  const index = {};
+  docs.forEach(({ id, text }) => {
+    const words = text.toLowerCase().match(/\w+/g) || [];
+    const uniqueWords = new Set(words);
+    uniqueWords.forEach((word) => {
+      if (!index[word]) index[word] = new Set();
+      index[word].add(id);
+    });
+  });
+  // Преобразуем множества в массивы для удобства
+  Object.keys(index).forEach((word) => {
+    index[word] = Array.from(index[word]);
+  });
+  return index;
 };
-const doc2 = { id: "doc2", text: "Don't shoot shoot shoot that thing at me." };
-const doc3 = { id: "doc3", text: "I'm your shooter." };
-const docs = [doc1, doc2, doc3];
 
-const result = search(docs, "shoot");
-const result2 = search(docs, "pint"); // ['doc1']
-const result3 = search(docs, "pint!"); // ['doc1']
+// 2. Подсчёт TF для документа
+const getTf = (text) => {
+  const words = text.toLowerCase().match(/\w+/g) || [];
+  const tf = {};
+  words.forEach((word) => {
+    tf[word] = (tf[word] || 0) + 1;
+  });
+  return tf;
+};
 
-console.log(result, result2, result3); // => ['doc1', 'doc2']
+// 3. Поиск с TF-IDF
+export default (docs, index, query) => {
+  const terms = query.toLowerCase().match(/\w+/g);
+  if (!terms) return [];
+
+  const N = docs.length;
+  const docScores = {};
+
+  docs.forEach(({ id, text }) => {
+    const tf = getTf(text);
+    let score = 0;
+
+    terms.forEach((term) => {
+      if (!index[term]) return;
+      const df = index[term].length;
+      const idf = Math.log(N / df);
+      const termTf = tf[term] || 0;
+      score += termTf * idf;
+    });
+
+    if (score > 0) {
+      docScores[id] = score;
+    }
+  });
+
+  return Object.entries(docScores)
+    .sort(([, a], [, b]) => b - a)
+    .map(([id]) => id);
+};

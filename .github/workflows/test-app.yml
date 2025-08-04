@@ -1,0 +1,28 @@
+name: test-app
+
+on:
+  push:
+    branches:
+      - "main"
+    tags:
+      - "**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Test by Jest and by lint
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Check codestyle of the project
+        run: make lint
+
+      - name: Run tests
+        run: make test

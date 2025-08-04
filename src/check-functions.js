@@ -1,4 +1,4 @@
-import search from "./search-engine/search.js";
+import search from "./search-engine/simple-search.js";
 
 const doc1 = {
   id: "doc1",

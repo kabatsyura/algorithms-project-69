@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@jest/globals";
-import search from "../src/search-engine/search.js";
+import search from "../src/index.js";
 
 describe("Test search function", () => {
   const doc1 = {
